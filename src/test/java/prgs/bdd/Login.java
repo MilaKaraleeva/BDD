@@ -27,18 +27,22 @@ public class Login {
 
     @BeforeAll
     public static void initiate(){
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("start-maximized");
-        webDriver = new ChromeDriver(chromeOptions);
+        try {
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("start-maximized");
+            webDriver = new ChromeDriver(chromeOptions);
+        } catch (Exception e) {
+            System.err.println("Error initializing WebDriver: " + e.getMessage());
+        }
 
     }
-   // @AfterAll
-   // public static void tearDown(){
-      //  if (webDriver != null) {
-      //      webDriver.close();
-      //      webDriver.quit();
-      //  }
- //   }
+   @AfterAll
+    public static void tearDown(){
+ if (webDriver != null) {
+     webDriver.close();
+     webDriver.quit();
+ }
+  }
 
     //Scenario 1
     @When("the user enters a valid email {string}")
