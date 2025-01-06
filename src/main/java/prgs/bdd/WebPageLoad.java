@@ -1,11 +1,9 @@
 package prgs.bdd;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchContextException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.net.URLClassLoader;
 import java.time.Duration;
 
 public class WebPageLoad {
@@ -36,18 +34,23 @@ public class WebPageLoad {
         WebElement inputField = webDriver.findElement(By.xpath(htmlField));
         inputField.clear();
         inputField.sendKeys(textToWrite);
-        return inputField.getAttribute("value");
+        return inputField.getText();
     }
 
-    public String findElementDoExist(String webUrl,String elementText ){
+    public String isErrorIsGenerated(String webUrl ){
         WebDriver.Timeouts timeouts;
         timeouts = webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(wait));
         webDriver.get(webUrl);
-        WebElement messageText=webDriver.findElement(By.xpath(elementText));
-        return messageText.getText();
+        WebElement messageText;
+        try {
+            messageText=webDriver.findElement(By.id("errormsg"));
+        } catch (Exception e) {
+            return "Could not find the element!";
         }
-
+        return messageText.getText();
     }
+
+}
 
 
 

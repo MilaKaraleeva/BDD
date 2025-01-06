@@ -1,19 +1,14 @@
 package prgs.bdd;
 
-import io.cucumber.java.BeforeAll;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
 
 
 public class Login {
@@ -25,7 +20,7 @@ public class Login {
     static String textToWrite;
     static String elementText;
 
-    @BeforeAll
+    @Before
     public static void initiate(){
         try {
             ChromeOptions chromeOptions = new ChromeOptions();
@@ -36,13 +31,13 @@ public class Login {
         }
 
     }
-   @AfterAll
+    @AfterAll
     public static void tearDown(){
- if (webDriver != null) {
-     webDriver.close();
-     webDriver.quit();
- }
-  }
+        if (webDriver != null) {
+            webDriver.close();
+            webDriver.quit();
+        }
+    }
 
     //Scenario 1
     @When("the user enters a valid email {string}")
@@ -121,7 +116,7 @@ public class Login {
     public void an_error_message_is_displayed(String errorMessage) {
         elementText = errorMessage;
         WebPageLoad webPageLoad=new WebPageLoad(webDriver,wait);
-        String messageIsPopulated = webPageLoad.findElementDoExist(webUrl,errorMessage);
+        String messageIsPopulated = webPageLoad.isErrorIsGenerated(webUrl);
         assert messageIsPopulated.equals(errorMessage);
     }
     @And("the welcome message {string} is displayed")
